@@ -1,0 +1,19 @@
+
+
+
+
+set xrange [1:50]
+set yrange [1:10000]
+set ylabel 'total clicks per fragment'
+set xlabel 'number of users per fragment'
+set logscale y
+plot 'fragmentStatistics.txt' u 3:2 noti
+
+pause -1
+
+set xrange [1:50]
+set yrange [1:100000]
+set logscale y
+set xlabel 'number of users per fragment'
+set  ylabel 'number of fragments'
+plot 'hist.txt' u 1:2 noti

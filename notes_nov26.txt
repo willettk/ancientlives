@@ -1,0 +1,24 @@
+My responsibilities
+
+- write documentation with John Wallin
+- send email to Trevor with email for use of web tool
+- get MATLAB? (available on lucifer and SPA machines)
+
+- access to MySQL at MSI?
+- data dump of AL to MSI; setup and try to run a full reduction
+
+- documentation from POV of Zooniverse; thresholds, how is consensus achieved, KDE window size
+- if adopted by other transcription projects, can this be adapted?
+
+- how much of my time is to be spent on this, vis-a-vis Lucy and payscale?
+
+
+
+
+From Lucy:
+
+primary goal is documenting pipeline for a general transcription Zooniverse user
+15-20% of my time between now and Dec 31
+written in Matlab; primarily by Hao Yu, but inherited by John Wallin
+secondary goal is assisting on the documentation for the online curation tool
+need data dump and access to MSI, online tool

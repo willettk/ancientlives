@@ -1,0 +1,50 @@
+
+
+# THIS IS A REFERENCE FILE ONLY - not for execution
+
+
+# extract the data from the SQL database - the assumption is that database is called pap2013 
+# and has already been imported into sql.   The output file is put into /tmp/markers.txt
+
+#mysql -u root
+#use pap2013;
+#select user_id, fragment_id, x, y, (`character`) from markers where x is not null and y is not null and `character` is not null and `character`<>"" and x<>"" and y<>"" and x>0 and y>0
+#into outfile '/tmp/markers.txt'
+#fields terminated by ','
+#lines terminated by '\n';
+#exit;
+
+# cp the markers.txt file to the working directory
+#cp /tmp/markers.txt .
+
+# convert the unicode to a character file
+python convert2.py > converted.txt
+
+# create some helper files for arranging the data into subdirectories
+sort -n -k2 -t,  converted.txt > converted_by_frag.txt
+sort -n -k1 -t,  converted.txt > converted_by_user.txt
+
+# do some basic statisical analysis on the number of users and clicks per fragment
+python statistics.py
+python hist.py
+
+# plot the data - optional
+gnuplot < pfile
+
+# create a new helper file of fragments sorted by the number of users
+sort -n -k3 -t, fragmentStatistics.txt > sortedFragments.txt 
+
+# separate the fragments into files fragX_Y.txt which contain >=X and <=Y users
+python separate.py
+
+# create the matlab database
+module load matlab
+matlab -nodesktop -nosplash -r "make_db"
+
+##################
+
+python setupdirectories.py
+
+chmod 755 PBS_master
+./PBS_master
+
