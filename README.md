@@ -23,24 +23,24 @@ To convert the clicks into a consensus transcription, there are a number of step
 	exit;
 
 
-3) The program converts the markers file from unicode into plain text using the "convert2ascii.py" program.   This program replaces unicode character with a numerical value.  We use the convert2ascii.py program as a command line utility and pipe the output to a file called "converted.txt".
+3) The program converts the markers file from unicode into plain text using the "convert2ascii.py" program.   This program replaces unicode character with a numerical value.  We use the convert2ascii.py program as a command line utility and pipe the output to a file called "converted.csv".
 
 
 	# convert the unicode to a character file
-	python convert2ascii.py > converted.txt
+	python convert2ascii.py > converted.csv
 
 
 
-4) The system then sorts the "converted.txt" file create two new files.   One of the files is sorted by the fragment ID number and the other is sorted by the user id.   The file names are "converted_by_frag.txt" and "converted_by_user.txt".   
+4) The system then sorts the "converted.csv" file create two new files.   One of the files is sorted by the fragment ID number and the other is sorted by the user id.   The file names are "converted_by_frag.csv" and "converted_by_user.csv".   
 
 
 	# create some helper files for arranging the data into subdirectories
-	sort -n -k2 -t,  converted.txt > converted_by_frag.txt
-	sort -n -k1 -t,  converted.txt > converted_by_user.txt
+	sort -n -k2 -t,  converted.csv > converted_by_frag.csv
+	sort -n -k1 -t,  converted.csv > converted_by_user.csv
 
 
 
-5) Statistics are calculated by the "statistics.py" and "hist.py" programs.   Numbers including the number of clickers per fragment and the number of users per fragment are created.   The output file "fragmentStatistics.txt" is created by the "statistics.py" program.   The "hist.py" file creates a "hist.txt" text file to make it easier to examine the cumulative statistics for the current data dump.
+5) Statistics are calculated by the "statistics.py" and "hist.py" programs.   Numbers including the number of clickers per fragment and the number of users per fragment are created.   The output file "fragmentStatistics.csv" is created by the "statistics.py" program.   The "hist.py" file creates a "hist.csv" text file to make it easier to examine the cumulative statistics for the current data dump.
 
 
 	# do some basic statisical analysis on the number of users and clicks per fragment
@@ -48,7 +48,7 @@ To convert the clicks into a consensus transcription, there are a number of step
 	python hist.py
 	
 	# create a new helper file of fragments sorted by the number of users
-	sort -n -k3 -t, fragmentStatistics.txt > sortedFragments.txt 
+	sort -n -k3 -t, fragmentStatistics.csv > sortedFragments.csv 
 
 
 
@@ -61,10 +61,10 @@ To convert the clicks into a consensus transcription, there are a number of step
 	
 	
 	
-7) The "separate.py" python program separates the documents by the number of users that have contributed to each document.   The number of documents in each group is hard-coded within the code.   The output of this file is a series of files with lists of fragments in them.  The file names from the program is of the form "fragX_Y.txt", where X is the minimum and Y is the maximum number of users for the fragments listed within the file.   
+7) The "separate.py" python program separates the documents by the number of users that have contributed to each document.   The number of documents in each group is hard-coded within the code.   The output of this file is a series of files with lists of fragments in them.  The file names from the program is of the form "fragX_Y.csv", where X is the minimum and Y is the maximum number of users for the fragments listed within the file.   
 
 
-	# separate the fragments into files fragX_Y.txt which contain >=X and <=Y users
+	# separate the fragments into files fragX_Y.csv which contain \ge X and \le Y users
 	python separate.py
 
 
