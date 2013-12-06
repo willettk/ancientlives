@@ -4,27 +4,23 @@ import sys
 
 from itertools import groupby
 
-
-
-
-# histogram data for users
+# Histogram the user data
 userCount = []
-ff = open("fragmentStatistics.txt", "r")
-for l in ff:
-    l = l.strip()
-    v = l.split(", ")
-    userCount.append(int(v[2]))
-
-ff.close()
-
+with open("fragmentStatistics.csv", "r") as f:
+    next(f)
+    for line in f:
+        l = line.strip()
+        v = l.split(",")
+        userCount.append(int(v[2]))
 
 uu = sorted(userCount)
 hist = [len(list(group)) for key, group in groupby(uu)]
 val = sorted(list(set(uu)))
 
-ff = open("hist.txt","w")
+# Write the histogrammed data to text file
+with open("hist.csv","w") as ff:
 
-for i in range(len(val)):
-    ff.write(str(val[i]) + ", " + str(hist[i])+ "\n")
+    ff.write('bin,count\n')
+    for v,h in zip(val,hist):
+        ff.write('%s,%s\n' % (v,h))
 
-ff.close()
