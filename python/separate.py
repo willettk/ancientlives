@@ -10,9 +10,10 @@ import sys
 
 flist = []
 fragments = {}
-ff = open("./sortedFragments.txt","r")
-for l in ff:
-    l = l.strip()
+ff = open("../sortedFragments.csv","r")
+next(ff)
+for line in ff:
+    l = line.strip()
     v = l.split(",")
 
     frag = int(v[0])
