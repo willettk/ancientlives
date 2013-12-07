@@ -70,7 +70,7 @@ To convert the clicks into a consensus transcription, there are a number of step
 
 
 
-8) A matlab script is used to read the original unicode file into a Matlab database.   This step creates a large but well-indexed file that is used for subsequent processing.   This takes some (HOW MUCH) time.
+8) A matlab script is used to read the original unicode file into a Matlab database.   This step creates a large but well-indexed file that is used for subsequent processing.   This took 9m7.912s minutes on the MSI computer as a job with non-specified number of cores, using an older version of markers.txt.
 
 	# create the matlab database
 	module load matlab
