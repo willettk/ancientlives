@@ -9,18 +9,23 @@ To convert the clicks into a consensus transcription, there are a number of step
 
 
 
-2) Once the dumpfile has been created, it needs to be read into mysql for processing.   A series of simple SQL commands is used to extract a text dump of selected fields containing the user id, fragment ids, character position, and character identification.   This file is a unicode text file that is human and machine readable.   We call this extracted text file "markers.txt".
+2) Once the dumpfile has been created, it needs to be read into mysql for processing.   A series of simple SQL commands is used to extract a text dump of selected fields containing the user id, fragment ids, character position, and character identification.   This file is a unicode text file that is human and machine readable.   This extracted text file is named "markers.csv" and is reasonably large (198 MB) as of 02-Dec-2013.
 
 	# extract the data from the SQL database - the assumption is that database is called pap2013 
-	# and has already been imported into sql.   The output file is put into /tmp/markers.txt
+	# and has already been imported into sql.   The output file is put into /tmp/markers.csv
 	
-	# from MSQL - assumes the dump file has been read in already
+	# from MySQL - assumes the dump file has been read in already
 	use pap2013;
 	select user_id, fragment_id, x, y, (`character`) from markers where x is not null and y is not null and `character` is not null and `character`<>"" and x<>"" and y<>"" and x>0 and y>0
-	into outfile '/tmp/markers.txt'
+	into outfile '/tmp/markers.csv'
 	fields terminated by ','
 	lines terminated by '\n';
 	exit;
+
+    # Query run on Sequel Pro in my MacBook took ~1 minute to run, but crippled my laptop for roughly 20 minutes when asked to export it). 
+
+    use ancientlives;
+	select user_id, fragment_id, x, y, (`character`) from markers where x is not null and y is not null and `character` is not null and `character`<>"" and x<>"" and y<>"" and x>0 and y>0
 
 
 3) The program converts the markers file from unicode into plain text using the "convert2ascii.py" program.   This program replaces unicode character with a numerical value.  We use the convert2ascii.py program as a command line utility and pipe the output to a file called "converted.csv".
@@ -35,8 +40,8 @@ To convert the clicks into a consensus transcription, there are a number of step
 
 
 	# create some helper files for arranging the data into subdirectories
-	sort -n -k2 -t,  converted.csv > converted_by_frag.csv
-	sort -n -k1 -t,  converted.csv > converted_by_user.csv
+	sort -n -k2,2 -t,  converted.csv > converted_by_frag.csv
+	sort -n -k1,1 -t,  converted.csv > converted_by_user.csv
 
 
 
@@ -57,6 +62,10 @@ To convert the clicks into a consensus transcription, there are a number of step
 
 	# plot the data - optional
 	gnuplot < pfile
+
+    # OR do it in Python
+
+    python plot_stats.py
 	
 	
 	
@@ -70,7 +79,7 @@ To convert the clicks into a consensus transcription, there are a number of step
 
 
 
-8) A matlab script is used to read the original unicode file into a Matlab database.   This step creates a large but well-indexed file that is used for subsequent processing.   This took 9m7.912s minutes on the MSI computer as a job with non-specified number of cores, using an older version of markers.txt.
+8) A matlab script is used to read the original unicode file into a Matlab database.   This step creates a large but well-indexed file that is used for subsequent processing.   This took 9m7.912s minutes on the MSI computer as a job with non-specified number of cores, using an older version of markers.csv.
 
 	# create the matlab database
 	module load matlab
