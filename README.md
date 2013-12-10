@@ -53,7 +53,7 @@ To convert the clicks into a consensus transcription, there are a number of step
 	python hist.py
 	
 	# create a new helper file of fragments sorted by the number of users
-	sort -n -k3 -t, fragmentStatistics.csv > sortedFragments.csv 
+	sort -n -k3,3 -t, fragmentStatistics.csv > sortedFragments.csv 
 
 
 
