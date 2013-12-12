@@ -11,7 +11,7 @@
 %     is_visible - true if plot is to be displayed, as well as printed to a file
 
 % Read information for users
-[ ~, fragment_ids, user_ids, x, y, chars ] = read_fragments_mod('markers.txt');
+[ ~, fragment_ids, user_ids, x, y, chars ] = read_fragments_mod('markers.csv');
 
 save markers_db2.mat fragment_ids user_ids x y chars;
 
