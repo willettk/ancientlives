@@ -37,7 +37,8 @@ while ~feof( fid )
     fragment_ids( num_lines ) = t( 2 );
     x( num_lines ) = t( 3 );
     y( num_lines ) = t( 4 );
-    chars{ num_lines } = line( nextindex );
+    % chars{ num_lines } = line( nextindex ); % JW original
+    chars{ num_lines } = strrep(line( nextindex :length(line)),'"','');     % KW modification
 end
 
 user_ids = user_ids( 1 : num_lines );
