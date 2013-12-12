@@ -1,51 +1,40 @@
-
-#import packages
-#from Tkinter import *
-#from numpy import *
-#from scipy import *
-import math
-import urllib
-import sys
-import time
 import os
 import glob
 
-
+# Point of this program: end up with a list of fragment IDs (fraglist.txt) WITHOUT consensus as defined by the KDE algorithm.
 
 thisdir = os.getcwd()
 f = thisdir.split("/")
-name = "../" +  f[-1] + ".txt"
+name = "../" +  f[-1] + ".csv"      # eg, ../frag5_6.csv
 
-# create a unique list of files that needed to be run
-a = open(name,"r")
+# Create a unique list of files that need to be run
 
-olist = []
-for lines in a:
-    olist.append(int(lines.strip()))
-a.close()
+with open(name,"r") as a:
 
-cset= sorted(list(set(olist)))
+    olist = []
+    for lines in a:
+        olist.append(int(lines.strip()))        # olist is a list of the fragment IDs in that user range
 
-cset1 = {}
+cset= sorted(list(set(olist)))      # unique fragment IDs
+
+cdict = {}
 for c in cset:
-    cset1[c] = 0
+    cdict[c] = 0                    # empty dictionary, with every entry (initially) at 0
 
-
-# make a list of the output files
+# Make a list of the EXISTING output files
 path = "./"
 flist = glob.glob(os.path.join(path,"fragment*_consensus*.txt"))
 
-clist = []
+clist = []                          # empty array for the EXISTING fragment integers
 for f in flist:
     ll = f.split("_")
     clist.append(int(ll[1]))
 
 for d in clist:
-    cset1[d] = cset1[d] + 1
+    cdict[d] += 1                   # add counter to the dictionary if it has a consensus file
 
-f2 = open("fraglist.txt","w")
-for c in cset:
-    if cset1[c] <> 4:
-        f2.write(str(c) + "\n")
-f2.close()
+with open("fraglist.txt","w") as f2:    
+    for c in cset:
+        if cdict[c] != 4:               # If consensus counter is not 4 (?), write fragment ID to file
+            f2.write(str(c) + "\n")
     
