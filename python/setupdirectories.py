@@ -1,13 +1,14 @@
-import sys
 import os
 import glob
+import time
 
 path = "./"
-flist = glob.glob(os.path.join(path,"frag[1-9]*.txt"))
+flist = glob.glob(os.path.join(path,"frag[1-9]*.csv"))
 
 executable = "process_directory_serial"
 current = os.getcwd()
 masterdirectory = current
+matlab_path = os.path.join(current,'matlab')
 
 f4 = open("PBS_master","w")
 
@@ -15,7 +16,7 @@ for f in flist:
     cmdlist = []
     nn = f.split("/")
     nn1 = nn[1].split(".")
-    dirname = nn1[0]
+    dirname = path + nn1[0]
 
     exists = os.path.exists(dirname)
 
@@ -23,16 +24,17 @@ for f in flist:
         print "creating ", dirname
         os.makedirs(dirname)
 
-        name = "greek_to_latex.mat"
-        src = current + "/" + name
-        dst = dirname + "/"+ name
-        os.link(src, dst)
+        # .mat files are in John Wallin's directory and write-protected. KW, 10 Dec 2013
+        name_gtl = "greek_to_latex.mat"
+        src_gtl = os.path.join(matlab_path,name_gtl)
+        dst_gtl = os.path.join(dirname,name_gtl)
+        print src_gtl, dst_gtl
+        os.link(src_gtl, dst_gtl)
 
-        name = "markers.mat"
-        src = current + "/" + name
-        dst = dirname + "/"+ name
-        os.link(src, dst)
-
+        name_markers = "markers.mat"
+        src_markers = os.path.join(matlab_path,name_markers)
+        dst_markers = os.path.join(dirname,name_markers)
+        os.link(src_markers, dst_markers)
 
 
     s= "#!/bin/bash -l"
