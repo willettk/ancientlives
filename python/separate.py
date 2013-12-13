@@ -2,7 +2,7 @@
 # from the dictionary of the number of users for each fragment
 
 flist = []
-with open("sortedFragments.csv","r") as ff:
+with open("sortedFragments.txt","r") as ff:
     next(ff)
     for line in ff:
         l = line.strip()
@@ -20,7 +20,7 @@ for idx,(gmin,gmax) in enumerate(zip(groupLimits[:-1],groupLimits[1:])):
 # open the files for each groupsize
 fhandle = []
 for gmin,gmax in zip(groupLimits[:-1],groupLimits[1:]):
-    fn = 'frag%i_%i.csv' % (gmin,gmax-1)
+    fn = 'frag%i_%i.txt' % (gmin,gmax-1)
     fhandle.append(open(fn,'w'))
 
 

@@ -3,7 +3,7 @@ import glob
 import time
 
 path = "./"
-flist = glob.glob(os.path.join(path,"frag[1-9]*.csv"))
+flist = glob.glob(os.path.join(path,"frag[1-9]*.txt"))
 
 executable = "process_directory_serial"
 current = os.getcwd()

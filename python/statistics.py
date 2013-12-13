@@ -14,7 +14,7 @@ clicks = []
 fragmentCurrent = 0
 clickCount = 0
 
-fname = "converted_by_frag.csv"
+fname = "converted_by_frag.txt"
 with codecs.open(fname, encoding='utf-8', mode='r') as f:
 
     for line in f:
@@ -42,7 +42,7 @@ with codecs.open(fname, encoding='utf-8', mode='r') as f:
         clickCount += 1
 
 # Write the results to a text file in CSV format
-with open("fragmentStatistics.csv", "w") as ff:
+with open("fragmentStatistics.txt", "w") as ff:
     ff.write('fragment,clicks,userCount,clicksPerUser\n')
     
     for fragment,click,usercnt in zip(fragmentList,clicks,userCount):

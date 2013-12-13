@@ -1,6 +1,6 @@
 import codecs
 
-fname = "markers.csv"
+fname = "markers.txt"
 with codecs.open(fname, encoding='utf-8', mode='r') as f:
 
     next(f)

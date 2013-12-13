@@ -5,7 +5,7 @@ from astropy.io import ascii
 
 # fragmentStatistics 
 
-with open('fragmentStatistics.csv','r') as f:
+with open('fragmentStatistics.txt','r') as f:
     fs = ascii.read(f)
 
 fig = plt.figure()
@@ -23,7 +23,7 @@ plt.savefig('fragmentStatistics.ps')
 
 # hist
 
-with open('hist.csv','r') as f:
+with open('hist.txt','r') as f:
     h = ascii.read(f)
 
 fig = plt.figure()

@@ -5,7 +5,7 @@ import glob
 
 thisdir = os.getcwd()
 f = thisdir.split("/")
-name = "../" +  f[-1] + ".csv"      # eg, ../frag5_6.csv
+name = "../" +  f[-1] + ".txt"      # eg, ../frag5_6.txt
 
 # Create a unique list of files that need to be run
 
