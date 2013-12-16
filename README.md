@@ -92,6 +92,8 @@ To convert the clicks into a consensus transcription, there are a number of step
 
     The version of Matlab on MSI is not reading the SQL output properly in "read_fragments_mod.m" (which is called by make_db). The purpose is to import a CSV file into a Matlab database, which should be simple. The problem is that the cell array in John's code is not recognizing the Greek unicode characters. It can be read into Matlab, but when saving as a cell array, it gets converted to a gibberish "[]" character. Frustrating, and means that all the results from the KDE don't work on the new data. - KW, 12 Dec 2013
 
+    Seems fixed now - the gibberish "[]" character is differentiable, but not in the interactive environment. Still annoying.
+
 9) A program called "setupdirectories.py" creates a set of directories and portable batch script (PBS) files that are used to process the data.   The PBS scripts copy critical data into the subdirectories and then execute "process_directories_serial.m" for the fragment groups.   It then creates a set of transcription files using the "createLines.py" program.   Before executing, the scripts run the "restart.py" script.  This script ensures than only unprocessed files are put through the processing pipeline effectively checkpointing the code.
 
 
