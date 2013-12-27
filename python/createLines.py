@@ -17,7 +17,7 @@ class papyri:
         self.readFiles()
         nfile = len(self.flist)
 
-        # loop through files and process them
+        # loop through files in current directory and process them
         self.processCommandLine()
 
         if self.all == 1:
@@ -65,7 +65,7 @@ class papyri:
                 self.dumpPositionStats()
 
         else:
-            print "There are less than 2 lines in the file - character placement analysis failed."
+            print "There are less than 2 lines in file %s - character placement analysis failed." % self.fname
 
     def readFiles(self):
         path = "./"
@@ -151,17 +151,19 @@ class papyri:
             if self.maxClicks < self.nclicks[i]:
                 self.maxClicks = self.nclicks[i]
 
-        self.xmin = np.amin(self.xxFiltered)
-        self.xmax = np.amax(self.xxFiltered)
-        self.xmean = np.mean(self.xxFiltered)
-        self.xmedian = np.median(self.xxFiltered)
-        self.xstd = np.std(self.xxFiltered)
+        if len(self.xxFiltered) > 0:
+            self.xmin = np.amin(self.xxFiltered)
+            self.xmax = np.amax(self.xxFiltered)
+            self.xmean = np.mean(self.xxFiltered)
+            self.xmedian = np.median(self.xxFiltered)
+            self.xstd = np.std(self.xxFiltered)
 
-        self.ymin = np.amin(self.yyFiltered)
-        self.ymax = np.amax(self.yyFiltered)
-        self.ymean = np.mean(self.yyFiltered)
-        self.ymedian = np.median(self.yyFiltered)
-        self.ystd = np.std(self.yyFiltered)
+        if len(self.yyFiltered) > 0:
+            self.ymin = np.amin(self.yyFiltered)
+            self.ymax = np.amax(self.yyFiltered)
+            self.ymean = np.mean(self.yyFiltered)
+            self.ymedian = np.median(self.yyFiltered)
+            self.ystd = np.std(self.yyFiltered)
 
     def dumpData(self):
         for i in range(len(self.cval)):
@@ -582,7 +584,7 @@ class papyri:
         # gaps associated with black areas in the document.    we generally expect characters to be within
         # the 7/8 spacing distribution with the rest being bigger gaps.   this probably should be done
         # with a more sophisticated algorithm that looks for gaps in the distribution.   The best estimate seems
-        # to ber spaceEstimateSmall since it is more typical of spacing than the bigger gaps.
+        # to be spaceEstimateSmall since it is more typical of spacing than the bigger gaps.
         self.spaceEstimateBig   =  sorted(self.characterSpace)[ len(self.characterSpace)* 7/ 8]
         self.spaceEstimateSmall =  sorted(self.characterSpace)[ len(self.characterSpace)* 1/ 8]
         self.spaceEstimate      =  sorted(self.characterSpace)[ len(self.characterSpace)* 6/ 8]
@@ -770,7 +772,10 @@ class papyri:
                             # for characters other than the first, we see if it is within 2 spaces
                             # from the last character.   If not, we find its location based on the
                             # absolute position
-                            dn = (x1 - clast) / self.spaceEstimateSmall
+                            try:
+                                dn = (x1 - clast) / self.spaceEstimateSmall
+                            except ZeroDivisionError:
+                                dn = (x1 - clast) / self.spaceEstimate
                             clast = x1
                             if dn < 1.5:
                                 ccurrent = ccurrent + 1
@@ -980,7 +985,7 @@ class papyri:
         self.doFormatted = 1   # human readable & formatted strings
         self.all = 1           # do all the files
 
-        if len(sys.argv) == 1:
+        if len(sys.argv) > 1:
             print "\nCommand line parameters:"
             print "--help - prints this list"
             print "--all  - processes all the files in the directory"
