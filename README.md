@@ -107,4 +107,3 @@ To convert the clicks into a consensus transcription, there are a number of step
 	# process the data
 	chmod 755 PBS_master
 	./PBS_master
- 
